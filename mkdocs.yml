@@ -1,0 +1,109 @@
+site_name: OmniSound
+site_description: Universal motor audio system — turn any motor into a speaker
+site_url: https://omnisound-project.github.io/omnisound
+repo_url: https://github.com/omnisound-project/omnisound
+repo_name: omnisound-project/omnisound
+edit_uri: edit/main/docs/
+
+theme:
+  name: material
+  palette:
+    - media: "(prefers-color-scheme: light)"
+      scheme: default
+      primary: indigo
+      accent: indigo
+      toggle:
+        icon: material/brightness-7
+        name: Switch to dark mode
+    - media: "(prefers-color-scheme: dark)"
+      scheme: slate
+      primary: indigo
+      accent: indigo
+      toggle:
+        icon: material/brightness-4
+        name: Switch to light mode
+  features:
+    - navigation.tabs
+    - navigation.instant
+    - navigation.tracking
+    - navigation.expand
+    - search.suggest
+    - search.highlight
+    - content.code.copy
+    - content.code.annotate
+    - content.tabs.link
+  icon:
+    repo: fontawesome/brands/github
+  language: en
+
+plugins:
+  - search
+  - mkdocstrings:
+      handlers:
+        python:
+          options:
+            show_source: true
+            show_root_heading: true
+            show_category_heading: true
+            members_order: source
+            separate_signature: true
+            filters:
+              - "!^_"
+
+markdown_extensions:
+  - admonition
+  - attr_list
+  - md_in_html
+  - tables
+  - pymdownx.highlight:
+      anchor_linenums: true
+      line_spans: __span
+      pygments_lang_class: true
+  - pymdownx.inlinehilite
+  - pymdownx.snippets
+  - pymdownx.superfences
+  - pymdownx.tabbed:
+      alternate_style: true
+  - toc:
+      permalink: true
+
+nav:
+  - Home: index.md
+  - Getting Started:
+      - Installation: getting-started/installation.md
+      - Quick Start: getting-started/quick-start.md
+      - Configuration: getting-started/configuration.md
+  - Hardware:
+      - Overview: hardware/overview.md
+      - Wiring Diagrams: hardware/wiring-diagrams.md
+      - ESP32 Setup: hardware/esp32.md
+      - Arduino Setup: hardware/arduino.md
+      - Raspberry Pi Pico: hardware/pico.md
+      - Advanced Configurations: hardware/advanced.md
+  - Software:
+      - Python Engine: software/python-engine.md
+      - Plugin System: software/plugins.md
+      - Web GUI: software/web-gui.md
+      - API Reference: software/api-reference.md
+  - Plugins:
+      - Overview: plugins/overview.md
+      - Creating a Hardware Plugin: plugins/creating-hardware-plugin.md
+      - Creating an Audio Source Plugin: plugins/creating-audio-source.md
+      - Creating a Processor Plugin: plugins/creating-processor.md
+  - Troubleshooting:
+      - Common Issues: troubleshooting/common-issues.md
+      - Hardware Debugging: troubleshooting/hardware.md
+      - Software Debugging: troubleshooting/software.md
+  - Contributing:
+      - Guide: contributing/guide.md
+      - Code of Conduct: contributing/code-of-conduct.md
+  - Changelog: changelog.md
+
+extra:
+  social:
+    - icon: fontawesome/brands/github
+      link: https://github.com/omnisound-project/omnisound
+    - icon: fontawesome/brands/discord
+      link: https://discord.gg/omnisound
+  version:
+    provider: mike

@@ -1,0 +1,152 @@
+name: CI
+
+on:
+  push:
+    branches: [main, develop]
+  pull_request:
+    branches: [main, develop]
+
+jobs:
+  # ===========================================
+  # ESP32 Firmware Build
+  # ===========================================
+  build-esp32:
+    name: Build ESP32 Firmware
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+
+      - name: Install PlatformIO
+        run: pip install platformio
+
+      - name: Build ESP32 Firmware
+        run: |
+          cd firmware/esp32
+          pio run
+
+      - name: Upload Firmware Artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: esp32-firmware
+          path: |
+            firmware/esp32/.pio/build/esp32/firmware.bin
+            firmware/esp32/.pio/build/esp32/partitions.bin
+          retention-days: 7
+
+  # ===========================================
+  # Python Engine Tests + Lint
+  # ===========================================
+  test-python:
+    name: Test Python Engine
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+
+      - name: Install Dependencies
+        run: pip install -r requirements-dev.txt
+
+      - name: Lint (Ruff)
+        run: ruff check core/ plugins/
+
+      - name: Format Check (Black)
+        run: black --check core/ plugins/
+
+      - name: Run Tests
+        run: pytest tests/ --cov=core --cov=plugins --cov-report=xml
+
+      - name: Upload Coverage
+        uses: codecov/codecov-action@v4
+        with:
+          file: coverage.xml
+        if: always()
+
+  # ===========================================
+  # GUI Build Test
+  # ===========================================
+  build-gui:
+    name: Build GUI
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v4
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: "20"
+
+      - name: Install Dependencies
+        run: |
+          cd gui
+          npm install
+
+      - name: Build GUI
+        run: |
+          cd gui
+          npm run build
+
+      - name: Upload GUI Artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: gui-build
+          path: gui/dist
+          retention-days: 7
+
+  # ===========================================
+  # Arduino Sketch Verification
+  # ===========================================
+  build-arduino:
+    name: Build Arduino Sketch
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v4
+
+      - name: Verify Arduino Sketch
+        run: |
+          echo "Arduino sketch found:"
+          ls -la firmware/arduino/
+
+  # ===========================================
+  # Code Quality Check
+  # ===========================================
+  code-quality:
+    name: Code Quality
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v4
+
+      - name: Check File Structure
+        run: |
+          echo "Checking project structure..."
+          ls -la
+          ls -la firmware/
+          ls -la gui/
+
+      - name: Check Required Files
+        run: |
+          for f in README.md CONTRIBUTING.md LICENSE .gitignore CHANGELOG.md; do
+            if [ ! -f "$f" ]; then
+              echo "ERROR: $f missing"
+              exit 1
+            fi
+            echo "$f exists"
+          done

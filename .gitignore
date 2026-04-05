@@ -1,0 +1,88 @@
+# ===========================================
+# Python
+# ===========================================
+__pycache__/
+*.py[cod]
+*$py.class
+*.egg-info/
+dist/
+build/
+.eggs/
+*.egg
+.venv/
+venv/
+env/
+ENV/
+
+# ===========================================
+# Node
+# ===========================================
+node_modules/
+gui/dist/
+gui/.vite/
+.npm/
+
+# ===========================================
+# Secrets & config
+# ===========================================
+.env
+.env.*
+!.env.example
+omnisound_config.json
+!omnisound_config.example.json
+*.key
+*.pem
+secrets/
+
+# ===========================================
+# OS
+# ===========================================
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# ===========================================
+# IDE
+# ===========================================
+.vscode/
+!.vscode/settings.json
+!.vscode/extensions.json
+!.vscode/launch.json
+.idea/
+*.swp
+*.swo
+
+# ===========================================
+# Test artifacts
+# ===========================================
+.pytest_cache/
+.coverage
+htmlcov/
+coverage.xml
+
+# ===========================================
+# Logs
+# ===========================================
+*.log
+logs/
+
+# ===========================================
+# Audio test files (use fixtures instead)
+# ===========================================
+*.wav
+*.mp3
+!tests/fixtures/*.wav
+
+# ===========================================
+# Firmware build artifacts
+# ===========================================
+.pio/
+firmware/*/build/
+
+# ===========================================
+# Docs build
+# ===========================================
+docs/site/
+site/
+.jekyll-cache/
+.sphinx-build/

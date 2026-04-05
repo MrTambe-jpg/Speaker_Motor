@@ -1,0 +1,66 @@
+name: Hardware Support Request
+description: Request support for a new microcontroller or hardware board
+title: "[Hardware]: "
+labels: ["enhancement", "hardware"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Thanks for requesting hardware support! Please fill out the details below.
+  - type: input
+    id: board-name
+    attributes:
+      label: Board Name and Model
+      description: e.g. ESP32-S3, Teensy 4.1, STM32 Blue Pill
+    validations:
+      required: true
+  - type: input
+    id: board-link
+    attributes:
+      label: Link to Board Documentation
+      description: URL to the official board page or datasheet
+      placeholder: https://...
+    validations:
+      required: true
+  - type: dropdown
+    id: interface
+    attributes:
+      label: Communication Interface
+      description: How does this board communicate?
+      options:
+        - Serial (USB/UART)
+        - SPI
+        - I2C
+        - WiFi
+        - BLE (Bluetooth Low Energy)
+        - Other
+    validations:
+      required: true
+  - type: dropdown
+    id: willing-to-test
+    attributes:
+      label: Are You Willing to Test This?
+      description: Can you physically test on this hardware?
+      options:
+        - "Yes"
+        - "No"
+    validations:
+      required: true
+  - type: input
+    id: library-link
+    attributes:
+      label: Existing Library Link
+      description: Link to an existing Arduino/Python library for this board (if any)
+      placeholder: https://...
+  - type: textarea
+    id: additional-info
+    attributes:
+      label: Additional Information
+      description: Any other details about the board, pinout, special requirements, etc.
+  - type: checkboxes
+    id: terms
+    attributes:
+      label: Code of Conduct
+      options:
+        - label: I agree to follow this project's Code of Conduct
+          required: true

@@ -1,0 +1,91 @@
+name: Bug Report
+description: Report a bug to help us improve OmniSound
+title: "[Bug]: "
+labels: ["bug", "triage"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Thanks for taking the time to fill out this bug report!
+  - type: dropdown
+    id: version
+    attributes:
+      label: OmniSound Version
+      description: What version of OmniSound are you running?
+      options:
+        - 1.0.0
+        - 0.2.0
+        - 0.1.0
+        - Other (specify below)
+    validations:
+      required: true
+  - type: input
+    id: os
+    attributes:
+      label: Operating System + Python Version
+      description: e.g. Ubuntu 22.04 + Python 3.11, Windows 11 + Python 3.10
+    validations:
+      required: true
+  - type: dropdown
+    id: hardware
+    attributes:
+      label: Hardware Being Used
+      description: Which hardware backend are you using?
+      options:
+        - ESP32 (WiFi)
+        - Arduino (Serial)
+        - Raspberry Pi Pico (MicroPython)
+        - Raspberry Pi (GPIO)
+        - Simulation (No hardware)
+    validations:
+      required: true
+  - type: dropdown
+    id: audio-source
+    attributes:
+      label: Audio Source
+      description: Which audio source are you using?
+      options:
+        - Microphone
+        - File Player
+        - System Audio (Loopback)
+        - Other
+    validations:
+      required: true
+  - type: textarea
+    id: steps
+    attributes:
+      label: Steps to Reproduce
+      description: How do we reproduce this issue?
+      placeholder: |
+        1. Start OmniSound with...
+        2. Select audio source...
+        3. Click start...
+        4. See error
+    validations:
+      required: true
+  - type: textarea
+    id: expected
+    attributes:
+      label: Expected Behavior
+      description: What did you expect to happen?
+    validations:
+      required: true
+  - type: textarea
+    id: actual
+    attributes:
+      label: Actual Behavior
+      description: What actually happened?
+    validations:
+      required: true
+  - type: textarea
+    id: logs
+    attributes:
+      label: Logs
+      description: Please paste any relevant log output.
+      render: shell
+  - type: textarea
+    id: config
+    attributes:
+      label: Relevant Configuration
+      description: Please paste any relevant configuration (remove sensitive data).
+      render: json

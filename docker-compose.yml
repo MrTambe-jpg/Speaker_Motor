@@ -1,0 +1,35 @@
+services:
+  omnisound:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      - "8000:8000"
+    environment:
+      - OMNISOUND_HOST=0.0.0.0
+      - OMNISOUND_PORT=8000
+    volumes:
+      - ./omnisound_config.json:/app/omnisound_config.json:rw
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "python", "-c", "import urllib.request; urllib.request.urlopen('http://localhost:8000/api/status')"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 10s
+
+  omnisound-dev:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      - "8000:8000"
+    environment:
+      - OMNISOUND_HOST=0.0.0.0
+      - OMNISOUND_PORT=8000
+    volumes:
+      - .:/app:rw
+      - /app/__pycache__
+    command: ["--host", "0.0.0.0", "--no-browser", "--simulation"]
+    profiles:
+      - dev
